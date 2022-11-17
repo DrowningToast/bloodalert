@@ -31,3 +31,12 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# env
+.env
+
+# db
+pg-db
+
+# kuma
+uptime-kuma-data

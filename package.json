@@ -9,8 +9,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:linebot": "turbo run dev --filter=linebot",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "setup:python": "pip install Flask pony psycopg2",
+    "setup": "npm i -g yarn && yarn install && yarn run setup:python && docker-compose up -d --build"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
