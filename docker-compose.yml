@@ -3,7 +3,7 @@ version: "3"
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
-    container_name: tobeit-uptime-kuma
+    container_name: bloodalert-uptime-kuma
     volumes:
       - ./uptime-kuma-data:/app/data
     ports:
