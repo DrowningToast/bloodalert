@@ -1,10 +1,20 @@
 
 from flask import Flask
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 app = Flask(__name__)
- 
+
+@app.route('/test')
+def test():
+   total = 1 + 1
+   return "%s"%(os.getenv('TEST'))
+
 @app.route('/hello/<name>')
 def hello_name(name):
    return 'Hello %s!' % name
  
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True,)
