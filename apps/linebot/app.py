@@ -47,6 +47,19 @@ def test():
 @app.route('/hello/<name>')
 def hello_name(name):
    return 'Hello %s!' % name
- 
+
+@app.route('/test')
+def test2():
+   update_subscriber("1234", {"bloodtype":"AB", "district":"Latkrabang"})
+   return ("success")
+
+@app.route("/subscriber/<user_id>", methods=["PATCH"])
+def user(user_id):
+      req_data = json.loads(request.data)
+      result = update_subscriber(user_id, req_data)
+      return result
+      
+   
+
 if __name__ == '__main__':
    app.run(debug=True,)

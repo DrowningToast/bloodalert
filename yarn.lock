@@ -304,7 +304,7 @@
 
 "@next/swc-darwin-arm64@13.0.0":
   version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.0.0.tgz#caf262fb5cb8bb335f6f344fd67a44dc8bf6a084"
+  resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.0.0.tgz"
   integrity sha512-APA26nps1j4qyhOIzkclW/OmgotVHj1jBxebSpMCPw2rXfiNvKNY9FA0TcuwPmUCNqaTnm703h6oW4dvp73A4Q==
 
 "@next/swc-darwin-x64@13.0.0":
@@ -354,7 +354,7 @@
 
 "@next/swc-win32-x64-msvc@13.0.0":
   version "13.0.0"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.0.tgz#c54a5a739dee04b20338d305226a2acdf701f67f"
   integrity sha512-FFOGGWwTCRMu9W7MF496Urefxtuo2lttxF1vwS+1rIRsKvuLrWhVaVTj3T8sf2EBL6gtJbmh4TYlizS+obnGKA==
 
 "@nodelib/fs.scandir@2.1.5":
@@ -2116,7 +2116,7 @@ turbo-darwin-64@1.6.3:
 
 turbo-darwin-arm64@1.6.3:
   version "1.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-1.6.3.tgz#f0a32cae39e3fcd3da5e3129a94c18bb2e3ed6aa"
+  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-1.6.3.tgz"
   integrity sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==
 
 turbo-linux-64@1.6.3:
@@ -2131,7 +2131,7 @@ turbo-linux-arm64@1.6.3:
 
 turbo-windows-64@1.6.3:
   version "1.6.3"
-  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-1.6.3.tgz"
+  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-1.6.3.tgz#89ac819fa76ad31d12fbfdeb3045bcebd0d308eb"
   integrity sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==
 
 turbo-windows-arm64@1.6.3:
