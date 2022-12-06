@@ -9,8 +9,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(os.getenv('CHANNELACCESSTOKEN'))
-handler = WebhookHandler(os.getenv('CHANNELSECRET'))
+line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 @app.route("/callback", methods=['POST'])
 def callback():
