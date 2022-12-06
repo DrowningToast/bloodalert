@@ -45,7 +45,8 @@ def update_subscriber(req_user_id, req_data):
 
 @db_session
 def remove_subscriber(user_id):
-    delete_subscriber = Subscriber(user_id=user_id).delete()
+    Subscriber.select(lambda sub: sub.user_id == user_id).delete()
+    # Subscriber(user_id=user_id).delete()
     return ("success")
 
 #annoucement
@@ -64,7 +65,8 @@ def update_annoucement(req_user_id, req_data):
 
 @db_session
 def remove_annoucement(user_id):
-    delete_annoucement = Annoucement(user_id=user_id).delete()
+    Annoucement.select(lambda sub: sub.user_id == user_id).delete()
+    # delete_annoucement = Annoucement(user_id=user_id).delete()
     return ("success")
 
 
