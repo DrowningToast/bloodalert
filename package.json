@@ -13,7 +13,7 @@
     "dev:linebot": "turbo run dev --filter=linebot",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "setup:python": "pip3 install Flask pony psycopg2-binary python-dotenv",
+    "setup:python": "pip3 install Flask pony psycopg2-binary python-dotenv line-bot-sdk",
     "setup": "npm i yarn && yarn install && yarn run setup:python && docker-compose up -d --build"
   },
   "devDependencies": {
