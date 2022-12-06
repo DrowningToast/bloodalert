@@ -12,6 +12,7 @@ class Annoucement(db.Entity):
     district = Required(str)
     date = Required(datetime.datetime)
     note = Required(str)
+    user_id = Required(str)
 
 class Subscriber(db.Entity):
     bloodtype = Required(str)
@@ -28,6 +29,7 @@ def test():
     return ("Hello world")
 
 
+#subscriber
 @db_session
 def add_subscriber(bloodtype, district, user_id):
     new_subscriber = Subscriber(bloodtype=bloodtype, district=district, user_id=user_id)
@@ -44,6 +46,25 @@ def update_subscriber(req_user_id, req_data):
 @db_session
 def remove_subscriber(user_id):
     delete_subscriber = Subscriber(user_id=user_id).delete()
+    return ("success")
+
+#annoucement
+@db_session
+def add_annoucement(name, surname, age, phonenumber, bloodtype):
+    new_annoucement = Annoucement(name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype)
+    
+@db_session
+def update_annoucement(req_user_id, req_data):
+    print(req_user_id)
+    print(req_data)
+    user = Annoucement.get(user_id=req_user_id)
+    # selected_user = select(subscribe for subscribe in  Subscriber if subscribe.user_id == req_user_id).get()
+    user.set(**req_data)
+    return user
+
+@db_session
+def remove_annoucement(user_id):
+    delete_annoucement = Annoucement(user_id=user_id).delete()
     return ("success")
 
 
