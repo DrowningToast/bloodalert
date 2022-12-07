@@ -4,9 +4,14 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        jost: "Jost",
+        poppins: "Poppins",
+        kanit: "Kanit",
+      },
+    },
   },
   plugins: [],
 };

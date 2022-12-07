@@ -23,9 +23,5 @@
   },
   "engines": {
     "node": ">=14.0.0"
-  },
-  "dependencies": {
-    "yarn": "^1.22.19"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }
