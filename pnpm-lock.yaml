@@ -5,8 +5,11 @@ importers:
   .:
     specifiers:
       eslint-config-custom: '*'
+      pnpm: ^7.18.1
       prettier: latest
       turbo: latest
+    dependencies:
+      pnpm: 7.18.1
     devDependencies:
       eslint-config-custom: link:packages/eslint-config-custom
       prettier: 2.8.0
@@ -1902,6 +1905,12 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pnpm/7.18.1:
+    resolution: {integrity: sha512-GulnWxFW1dej1sSiju1FlYtvWIYa35ZvbTk9F8jOo+1GgJEVdx1ObLaZCApd2I4IB+jozyNWzInEdV0hQgUq0Q==}
+    engines: {node: '>=14.6'}
+    hasBin: true
+    dev: false
 
   /postcss-import/14.1.0_postcss@8.4.19:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
