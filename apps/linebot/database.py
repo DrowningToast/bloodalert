@@ -24,12 +24,12 @@ db.bind(provider='postgres', user='bloodalert', password='bloodalert', host='loc
 db.generate_mapping(create_tables=True, check_tables=True)
 set_sql_debug(True)
 
-@db_session
-def test():
-    return ("Hello world")
-
-
 #subscriber
+@db_session
+def get_subscriber(bloodtype, district):
+    targets = Subscriber.select(lambda sub: sub.bloodtype == bloodtype and sub.district == district)[:]
+    return list(targets)
+
 @db_session
 def add_subscriber(bloodtype, district, user_id):
     new_subscriber = Subscriber(bloodtype=bloodtype, district=district, user_id=user_id)
