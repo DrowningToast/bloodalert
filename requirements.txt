@@ -1,0 +1,6 @@
+Flask 
+pony
+psycopg2-binary
+python-dotenv 
+line-bot-sdk
+Flask-RESTful
