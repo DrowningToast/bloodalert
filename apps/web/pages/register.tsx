@@ -8,6 +8,7 @@ import {
   iBloodtype,
   iDistrcits,
 } from "../components/constants";
+import Logo from "../components/Logo";
 import MobileFrame from "../components/MobileFrame";
 
 const RegisterPage: NextPage = () => {
@@ -22,7 +23,7 @@ const RegisterPage: NextPage = () => {
           <Link href="/">หน้าแรก</Link>
           <Link href="/news">ข่าวสาร</Link>
         </nav>
-        <div className="bg-white aspect-square w-44 rounded-full"></div>
+        <Logo />
         <h1 className="inline-block my-4 uppercase font-bold text-lg font-kanit text-[#2A3990]">
           Bloodalert
         </h1>
