@@ -40,3 +40,7 @@ pg-db
 
 # kuma
 uptime-kuma-data
+
+# pycache
+__pycache__
+__pycache__/*
