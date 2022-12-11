@@ -30,16 +30,17 @@ const Announcement: NextPage = () => {
         value.length >= 9 && value.length <= 10 && /^\d+$/.test(value)
           ? null
           : "กรุณากรอกเบอร์โทรศัพท์สำหรับการติดต่อ",
-      hospital: (value: string) =>
-        value.length >= 3 && value.length <= 160
-          ? null
-          : "กรุณาโรงพยาบาลของผู้ป่วยเพื่อการประชาสัมพันธ์ที่มีประสิทธิภาพ",
       bloodtype: (value: string) => {
         const bloodtypeSchema = z.enum(["A", "B", "O", "AB"]);
         return bloodtypeSchema.safeParse(value).success
           ? null
           : "Invalid bloodtype";
       },
+      hospital: (value: string) =>
+        value.length >= 3 && value.length <= 160
+          ? null
+          : "กรุณาโรงพยาบาลของผู้ป่วยเพื่อการประชาสัมพันธ์ที่มีประสิทธิภาพ",
+
       district: (value: string) => {
         const distrcitsSchema = z.enum(
           districts.map((dis) => dis.value) as [string, ...string[]]
@@ -48,6 +49,10 @@ const Announcement: NextPage = () => {
           ? null
           : "กรุณาเลือกเขตขอโรงพยาบาลในกทม.";
       },
+      note: (value: string) =>
+        value.length >= 3 && value.length <= 160
+          ? null
+          : "กรุณากรอกหมายเหตุกับช่องทางการติดต่อและช่วยเหลือที่ชัดเจนเพื่อประสิทธิของการประชาสัมพันธ์",
     },
   });
 
