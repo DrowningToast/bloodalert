@@ -21,6 +21,16 @@ def check_surname(surname):
     return condition_1 and condition_2
 
 """
+Expect: surnname to be string
+Expect: surnname length to be less or equal than 160
+Return: True if valid
+"""
+def check_hospital(surname):
+    condition_1 = len(surname) <= 160
+    condition_2 = isinstance(surname, str)
+    return condition_1 and condition_2
+
+"""
 Expect: age to be integer
 Expect: age  to be more than 0 and less than 150
 Return: True if valid
