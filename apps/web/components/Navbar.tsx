@@ -12,7 +12,7 @@ const Navbar: FC = () => {
           <Logo width={24.1} />
         </div>
       </div>
-      <div className="text-[#000259] font-kanit row-start-2 col-start-2 col-span-2 flex gap-x-3 font-light text-xs">
+      <div className="text-[#000259] font-kanit row-start-2 col-start-2 col-span-2 flex gap-x-4 font-light text-xs">
         <Link href="/">
           <span>หน้าแรก</span>
         </Link>

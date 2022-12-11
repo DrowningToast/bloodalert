@@ -69,22 +69,22 @@ const RegisterPage: NextPage = () => {
             }}
           ></Select>
 
-          <Button
-            color="pink"
-            disabled={!(bloodtype && district)}
-            className="bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
+          <Link
+            aria-disabled={"true"}
+            href={`/line?district=${district}&bloodtype=${bloodtype}`}
+            onClick={(e) => {
+              if (!(bloodtype && district)) e.preventDefault();
+            }}
+            className="inline-block w-fit mx-auto"
           >
-            <Link
-              aria-disabled={"true"}
-              href={`/line?district=${district}&bloodtype=${bloodtype}`}
-              onClick={(e) => {
-                if (!(bloodtype && district)) e.preventDefault();
-              }}
-              className="inline-block w-fit mx-auto"
+            <Button
+              color="pink"
+              disabled={!(bloodtype && district)}
+              className="bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
             >
               ลงทะเบียน
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
     </MobileFrame>
