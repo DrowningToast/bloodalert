@@ -41,8 +41,7 @@ const RegisterPage: NextPage = () => {
               label: "text-lg",
               root: "flex flex-col font-kanit",
               description: "text-xs font-kanit mb-1",
-              wrapper: "shadow",
-              input: "font-kanit",
+              input: "font-kanit shadow",
             }}
             data={bloodtypes}
             onChange={(e) => {
@@ -61,8 +60,7 @@ const RegisterPage: NextPage = () => {
               label: "text-lg",
               root: "flex flex-col font-kanit",
               description: "text-xs font-kanit mb-1",
-              wrapper: "shadow",
-              input: "font-kanit",
+              input: "font-kanit shadow",
             }}
             data={districts}
             onChange={(e) => {
