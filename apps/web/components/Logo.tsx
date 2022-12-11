@@ -9,7 +9,7 @@ const Logo: FC<Props> = ({ width }) => {
   return (
     <div
       className={`bg-white aspect-square w-${
-        width !== undefined ? `${width}px` : "44"
+        width !== undefined ? `${width}px` : "44 h-44"
       } rounded-full relative`}
     >
       <Image src="/logo.png" alt="Logo picture" fill />

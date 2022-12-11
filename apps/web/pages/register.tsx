@@ -23,8 +23,9 @@ const RegisterPage: NextPage = () => {
           <Link href="/">หน้าแรก</Link>
           <Link href="/news">ข่าวสาร</Link>
         </nav>
+        <br />
         <Logo />
-        <h1 className="inline-block my-4 uppercase font-bold text-lg font-kanit text-[#2A3990]">
+        <h1 className="inline-block my-4 uppercase font-bold text-2xl font-jost text-[#2A3990]">
           Bloodalert
         </h1>
         <div className="w-full rounded-t-[3rem] absolute bottom-0 inset-x-0 bg-gradient-to-b from-[#8CB7FD] to-[#D9D9D9] h-[55%] shadow-md drop-shadow flex justify-start flex-col px-8 py-12 gap-y-4">
