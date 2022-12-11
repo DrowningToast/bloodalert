@@ -5,6 +5,7 @@ from linebot import *
 from dotenv import load_dotenv
 import os, requests, json
 from database import *
+from test import *
 
 load_dotenv()
 
@@ -12,15 +13,6 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
-
-all_district = ["Bang Bon", "Bang Kapi", "Bang Khae", "Bang Khen","Bang Kho Laem","Bang Khun Thian",\
-   "Bang Na","Bang Phlat","Bang Rak","Bang Sue","Bangkok Noi","Bangkok Yai","Bueng Kum","Chatuchak",\
-   "Chom Thong","Din Daeng","Don Mueang","Dusit","Huai Khwang","Khan Na Yao","Khlong Sam Wa",\
-   "Khlong San","Khlong Toei","Lak Si","Lat Krabang","Lat Phrao","Min Buri","Nong Chok","Nong Khaem",\
-   "Pathum Wan","Phasi Charoen","Phaya Thai","Phra Khanong","Phra Nakhon","Pom Prap Sattru Phai",\
-   "Prawet","Rat Burana","Ratchathewee","Sai Mai","Samphanthawong","Saphan Sung","Sathon","Suan Luang",\
-   "Taling Chan","Thawi Watthana","Thon Buri","Thung Khru","Wang Thonglang", "Vadhana", "Yannawa"]
-all_bloodtype = ["A", "B", "O", "AB"]
 
 @app.route("/callback", methods=['GET','POST'])
 def callback():
@@ -47,24 +39,27 @@ def callback():
 
 def reply(intent,text,reply_token,id,disname):
    if intent == 'add_subscribe':
-      #make bloodtype and district into varieble
       text1 = text.split("\n")
       splited_bloodtype, splied_district = text1[2].split(":"), text1[3].split(":")
-      bloodtype, district = splited_bloodtype[1].replace(" ", ""), splied_district[1].replace(" ","", 1)
-      #validating information
-      if (bloodtype in all_bloodtype) and (district in all_district):
-         print("All information are validated", flush=True)
-         add_subscriber(bloodtype, district, id)
+      user_bloodtype, user_district = splited_bloodtype[1].replace(" ", ""), splied_district[1].replace(" ","", 1)
+      exist = update_subscriber(id)
+      print(len(exist), flush=True)
+      if check_bloodtype(user_bloodtype) and check_district(user_district):
+         if len(exist) > 0:
+            remove_subscriber(id)
+         add_subscriber(user_bloodtype, user_district, id)
+         text_message = TextSendMessage(text="ขอบคุณที่ติดตามข่าวสาร")
+         line_bot_api.reply_message(reply_token, text_message)
       else:
-         print("Some information are wrong", flush=True)
+         text_message = TextSendMessage(text="กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
+         line_bot_api.reply_message(reply_token, text_message)
    if intent == 'remove_subscribe':
       #remove user's subscription
       print("Removing user from database", flush=True)
       remove_subscriber(id)
-   # if intent == 'test':
-   #    text_message = TextSendMessage(text="test success")
-   #    line_bot_api.reply_message(reply_token, text_message)
-
+   if intent == 'test':
+      text_message = TextSendMessage(text="test success")
+      line_bot_api.reply_message(reply_token, text_message)
 
 @app.route('/hello/<name>')
 def hello_name(name):
@@ -96,7 +91,8 @@ def nottes():
 
 @app.route('/test2')
 def test2():
-
+   remove_subscriber("U59f17870b2143e19c8ffb7de23c5151f")
+   add_subscriber()
    return 'success'
 
 

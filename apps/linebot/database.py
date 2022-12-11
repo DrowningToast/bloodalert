@@ -30,18 +30,22 @@ def get_subscriber(bloodtype, district):
     targets = Subscriber.select(lambda sub: sub.bloodtype == bloodtype and sub.district == district)[:]
     return list(targets)
 
+# @db_session
+# def check_subscriber(user_id):
+
+
 @db_session
 def add_subscriber(bloodtype, district, user_id):
     new_subscriber = Subscriber(bloodtype=bloodtype, district=district, user_id=user_id)
     
 @db_session
-def update_subscriber(req_user_id, req_data):
-    print(req_user_id)
-    print(req_data)
-    user = Subscriber.get(user_id=req_user_id)
+def update_subscriber(req_user_id):
+    # print(req_user_id)
+    # print(req_data)
+    user = Subscriber.select(lambda sub: sub.user_id == req_user_id)[:]
     # selected_user = select(subscribe for subscribe in  Subscriber if subscribe.user_id == req_user_id).get()
-    user.set(**req_data)
-    return user
+    # user.set(**req_data)
+    return list(user)
 
 @db_session
 def remove_subscriber(user_id):
