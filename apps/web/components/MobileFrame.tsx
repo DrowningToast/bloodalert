@@ -7,7 +7,7 @@ interface Props {
 
 const MobileFrame: FC<Props> = ({ children, disableBg }) => {
   return (
-    <div className="grid h-screen p-2 place-items-center">
+    <div className="grid h-screen place-items-center overflow-x-hidden">
       <main
         className={`${
           disableBg ? "" : "bg-gradient-to-b from-[#75A8F8] to-[#FFFFFF]"
