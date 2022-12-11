@@ -71,7 +71,6 @@ const RegisterPage: NextPage = () => {
           ></Select>
 
           <Link
-            aria-disabled={"true"}
             href={`/line?district=${district}&bloodtype=${bloodtype}`}
             onClick={(e) => {
               if (!(bloodtype && district)) e.preventDefault();

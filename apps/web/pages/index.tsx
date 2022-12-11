@@ -12,7 +12,7 @@ const Index: NextPage = () => {
           <Navbar />
         </div>
         <div className="relative px-4 py-8">
-          <div className="bg-white rounded-full absolute h-96 w-96 bottom-16 left-6 scale-x-[160%] scale-y-[200%] z-0"></div>
+          <div className="bg-white rounded-full absolute h-96 w-96 bottom-16 left-6 scale-x-[170%] scale-y-[200%] z-0"></div>
 
           <div className="relative">
             <h1 className="z-10 font-jost uppercase text-4xl text-[#2A3990] font-bold my-2">
