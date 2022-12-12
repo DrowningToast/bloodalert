@@ -1,7 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [
-    "$NEXT_PUBLIC_BACKEND"
+    ".env"
+  ],
+  "globalEnv": [
+    "NEXT_PUBLIC_BACKEND"
   ],
   "pipeline": {
     "build": {
