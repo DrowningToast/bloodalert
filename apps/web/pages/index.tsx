@@ -27,11 +27,11 @@ const Index: NextPage = () => {
             <Link
               aria-disabled={"true"}
               href={`/register`}
-              className="inline-block w-fit mx-auto"
+              className="inline-block w-fit mx-auto float-right"
             >
               <Button
                 color="pink"
-                className="float-right my-6 bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
+                className="my-6 bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
               >
                 ลงทะเบียน
               </Button>
