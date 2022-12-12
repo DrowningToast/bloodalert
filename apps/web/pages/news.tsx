@@ -10,7 +10,7 @@ const News: NextPage = () => {
         <div className="bg-[#B9D3FB] drop-shadow-lg pb-4">
           <Navbar />
         </div>
-        <div className="w-full h-full flex flex-col items-center px-8 py-8 pb-12">
+        <div className="w-full flex flex-col items-center px-8 py-8 pb-12">
           <Spoiler
             maxHeight={280}
             showLabel="อ่านต่อ"

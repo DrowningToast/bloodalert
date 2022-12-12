@@ -24,18 +24,18 @@ const Index: NextPage = () => {
             <p className="font-kanit">
               สำหรับโรงพยาบาลผู้ที่ต้องการขอรับบริจาคเลือดและผู้ที่ต้องบริจาคเลือด
             </p>
-            <Button
-              color="pink"
-              className="float-right my-6 bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
+            <Link
+              aria-disabled={"true"}
+              href={`/register`}
+              className="inline-block w-fit mx-auto"
             >
-              <Link
-                aria-disabled={"true"}
-                href={`/register`}
-                className="inline-block w-fit mx-auto"
+              <Button
+                color="pink"
+                className="float-right my-6 bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
               >
                 ลงทะเบียน
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
