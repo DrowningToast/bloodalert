@@ -51,23 +51,33 @@ def reply(intent, text, reply_token, id, disname):
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
-        print(len(exist), flush=True)
         if check_bloodtype(user_bloodtype) and check_district(user_district):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)
             text_message = TextSendMessage(text="ขอบคุณที่ติดตามข่าวสาร")
-            line_bot_api.reply_message(reply_token, text_message)
         else:
             text_message = TextSendMessage(
                 text="กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
-            line_bot_api.reply_message(reply_token, text_message)
+        line_bot_api.reply_message(reply_token, text_message)
     if intent == 'remove_subscribe':
         # remove user's subscription
         print("Removing user from database", flush=True)
         remove_subscriber(id)
+        text_message = TextSendMessage(
+            text="ดำเนินการลบ subscription ของคุณเรียบร้อย")
+        line_bot_api.reply_message(reply_token, text_message)
     if intent == 'test':
         text_message = TextSendMessage(text="test success")
+        line_bot_api.reply_message(reply_token, text_message)
+    if intent == 'profile':
+        user_profile = update_subscriber(id)
+        if len(user_profile) == 0:
+            text_message = TextSendMessage(
+                text="เรายังไม่พบข้อมูลของคุณ%s กรุณาลงทะเบียนก่อน" % disname)
+        else:
+            text_message = TextSendMessage(text="ข้อมูลส่วนบุคคลของคุณ %s คือ\nกลุ่มโลหิต : %s\nเขต : %s"
+                                           % (disname, user_profile[0].bloodtype, user_profile[0].district))
         line_bot_api.reply_message(reply_token, text_message)
 
 
@@ -106,8 +116,8 @@ def root():
 
 @app.route('/test2')
 def test2():
-    remove_subscriber("U59f17870b2143e19c8ffb7de23c5151f")
-    add_subscriber()
+    test = update_subscriber("U59f17870b2143e19c8ffb7de23c5151f")
+    print(test[0].district, flush=True)
     return 'success'
 
 
