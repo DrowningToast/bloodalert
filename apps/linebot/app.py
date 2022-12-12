@@ -11,10 +11,13 @@ from database import *
 from test import *
 from typing import *
 
+
 load_dotenv()
+
 
 app = Flask(__name__)
 CORS(app)
+
 
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
@@ -23,7 +26,7 @@ handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 @app.route("/callback", methods=['GET', 'POST'])
 def callback():
     body = request.get_data(as_text=True)
-   #  print(body)
+    #  print(body)
     req = request.get_json(silent=True, force=True)
     intent = req["queryResult"]["intent"]["displayName"]
     text = req['originalDetectIntentRequest']['payload']['data']['message']['text']
@@ -33,14 +36,17 @@ def callback():
 
     print('id = ' + id)
     print('name = ' + disname)
-   #  print('text = ' + text)
-   # comment cause of unicode thai language
+    #  print('text = ' + text)
+    # comment cause of unicode thai language
     print('intent = ' + intent)
     print('reply_token = ' + reply_token)
 
     reply(intent, text, reply_token, id, disname)
 
     return 'OK'
+
+
+'''check intent'''
 
 
 def reply(intent, text, reply_token, id, disname):
@@ -60,6 +66,8 @@ def reply(intent, text, reply_token, id, disname):
             text_message = TextSendMessage(
                 text="กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
         line_bot_api.reply_message(reply_token, text_message)
+
+    '''remove subscriber from database'''
     if intent == 'remove_subscribe':
         # remove user's subscription
         print("Removing user from database", flush=True)
@@ -67,58 +75,25 @@ def reply(intent, text, reply_token, id, disname):
         text_message = TextSendMessage(
             text="ดำเนินการลบ subscription ของคุณเรียบร้อย")
         line_bot_api.reply_message(reply_token, text_message)
+
     if intent == 'test':
         text_message = TextSendMessage(text="test success")
         line_bot_api.reply_message(reply_token, text_message)
+
     if intent == 'profile':
         user_profile = update_subscriber(id)
         if len(user_profile) == 0:
             text_message = TextSendMessage(
                 text="เรายังไม่พบข้อมูลของคุณ%s กรุณาลงทะเบียนก่อน" % disname)
         else:
-            text_message = TextSendMessage(text="ข้อมูลส่วนบุคคลของคุณ %s คือ\nกลุ่มโลหิต : %s\nเขต : %s"
-                                           % (disname, user_profile[0].bloodtype, user_profile[0].district))
+            text_message = TextSendMessage(text="ข้อมูลส่วนบุคคลของคุณ %s คือ\nกลุ่มโลหิต : %s\nเขต : %s" % (
+                disname, user_profile[0].bloodtype, user_profile[0].district))
         line_bot_api.reply_message(reply_token, text_message)
-
-
-@app.route('/hello/<name>')
-def hello_name(name):
-    return 'Hello %s!' % name
-
-
-@app.route('/test')
-def test():
-    lst_users_id = []  # actually use this list
-    user_ids = ["U59f17870b2143e19c8ffb7de23c5151f"]  # list for the test
-
-    # receive json api
-    response = requests.get('http://localhost:8080/getUsers').text
-    response_info = json.loads(response)
-    targets = get_subscriber(
-        response_info['bloodtype'], response_info['district'])
-    for i in range(len(targets)):
-        lst_users_id.append(targets[i-1].user_id)
-
-    text_message = "URGENT ! \nIn need of group %s blood type\nanyone in %s area at %s that can help please come.\nName : %s   Surname : %s"\
-        % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
-
-    message = TextSendMessage(text=text_message)
-    # lst_users_id cannot be used cause of make up line id in db
-    line_bot_api.multicast(user_ids, message)
-    # print (text_message, flush=True)
-    return 'success'
 
 
 @app.route('/')
 def root():
     return 'ok'
-
-
-@app.route('/test2')
-def test2():
-    test = update_subscriber("U59f17870b2143e19c8ffb7de23c5151f")
-    print(test[0].district, flush=True)
-    return 'success'
 
 
 """API Endpoint for fetching latest announcement from the database"""
