@@ -46,7 +46,7 @@ To start locally running the project or deploy you need to have the following te
 
 Before running the setup script, environment variables are required to be setup first.
 
-Begin by duplicating .env.example to the root directory and apps/web. The .env configures the database name, username and database then LINE bot account channel access token and channel secret. And lastly Firebase configuration is required and began with NEXT_PUBLIC\_ prefix.
+Begin by duplicating .env.example to the root directory and apps/web. The .env configures the database name, username and database then LINE bot account channel access token and channel secret. And lastly Firebase configuration is required and began with NEXT_PUBLIC\_ prefix (only used for Authentication).
 
 To run the setup script, run the following command:
 
