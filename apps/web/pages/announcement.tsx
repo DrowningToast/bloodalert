@@ -2,10 +2,17 @@ import { NextPage } from "next";
 import MobileFrame from "../components/MobileFrame";
 import Navbar from "../components/Navbar";
 import { useForm } from "@mantine/form";
-import { Button, Select, Textarea, TextInput } from "@mantine/core";
+import { Button, Loader, Select, Textarea, TextInput } from "@mantine/core";
 import { bloodtypes, districts } from "../components/constants";
 import { DatePicker } from "@mantine/dates";
 import { z } from "zod";
+import { useAtom } from "jotai";
+import {
+  firebaseReady,
+  firebaseUserAtom,
+  signinWithGooglePopUp,
+} from "../components/firebase";
+import { IconBrandGoogle } from "@tabler/icons";
 
 const inputStyles = {
   label: "font-kanit",
@@ -56,6 +63,9 @@ const Announcement: NextPage = () => {
     },
   });
 
+  const [userProfile] = useAtom(firebaseUserAtom);
+  const [userReady] = useAtom(firebaseReady);
+
   return (
     <MobileFrame disableBg>
       <div className="bg-[#ECF0F3] w-full h-full overflow-y-auto">
@@ -65,91 +75,117 @@ const Announcement: NextPage = () => {
             Annoucement
           </h1>
         </header>
-        <form
-          onSubmit={form.onSubmit((data) => console.log(data))}
-          className="px-6 py-4 flex flex-col gap-y-2"
-        >
-          <TextInput
-            label="ชื่อ"
-            placeholder="ชื่อจริงของผู้ป่วย"
-            required
-            withAsterisk
-            classNames={inputStyles}
-            {...form.getInputProps("name")}
-          />
-          <TextInput
-            label="นามสกุล"
-            placeholder="นามสกุลของผู้ป่วย"
-            required
-            withAsterisk
-            classNames={inputStyles}
-            {...form.getInputProps("surname")}
-          />
-          <TextInput
-            label="เบอร์โทรศัพท์"
-            placeholder="08XXXXXXXX"
-            required
-            withAsterisk
-            classNames={inputStyles}
-            {...form.getInputProps("phonenumber")}
-          />
-          <Select
-            label="กรุ๊ปเลือด"
-            required
-            withAsterisk
-            withinPortal
-            classNames={inputStyles}
-            placeholder="กรุ๊ปเลือดของผู้ป่วย"
-            data={bloodtypes}
-            {...form.getInputProps("bloodtype")}
-          />
-          <TextInput
-            label="โรงพยาบาล"
-            placeholder="ชื่อโรงพยาบาลที่ผู้ป่วย"
-            required
-            withAsterisk
-            classNames={inputStyles}
-            {...form.getInputProps("hospital")}
-          />
-          <Select
-            label="เขต"
-            required
-            withAsterisk
-            withinPortal
-            classNames={inputStyles}
-            placeholder="เขตในกทม. ที่โรงพยาบาลอยู่"
-            data={districts}
-            {...form.getInputProps("district")}
-          />
-          <DatePicker
-            label="วันที่ประสงค์รับบริจาคเลือด"
-            placeholder="วัน/เดือน/ปี"
-            required
-            withAsterisk
-            classNames={inputStyles}
-            {...form.getInputProps("date")}
-          />
-          <Textarea
-            label="ช่องทางติดต่อสาธารณ และหมายเหตุ"
-            required
-            withAsterisk
-            classNames={{
-              ...inputStyles,
-              input: "font-kanit drop-shadow-lg rounded-md",
-            }}
-            radius="sm"
-            autosize
-            placeholder="เช่น ขาดเลือดด่วน 08XXXXXXXX ติดต่อที่ตึกXXXX ชั้นXXXX เวลาXXXX เป็นต้นไป"
-            {...form.getInputProps("note")}
-          />
-          <Button
-            color="pink"
-            type="submit"
-            className="bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
+        {!userReady ? (
+          <div className="w-full h-48 grid place-items-center">
+            <Loader />
+          </div>
+        ) : !userProfile ? (
+          <div className="flex flex-col justify-center items-center w-full h-72 gap-y-4">
+            <h1 className="text-lg font-kanit">
+              กรุณายืนยันตัวตนโดยใช้บัญชี Google
+            </h1>
+            <Button
+              color="blue"
+              onClick={() => {
+                try {
+                  signinWithGooglePopUp();
+                } catch (e) {
+                  console.error(e);
+                }
+              }}
+              leftIcon={<IconBrandGoogle fontWeight={800} />}
+              className="bg-[#CFEBFF] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-black mx-auto"
+            >
+              ลงทะเบียน
+            </Button>
+          </div>
+        ) : (
+          <form
+            onSubmit={form.onSubmit((data) => console.log(data))}
+            className="px-6 py-4 flex flex-col gap-y-2"
           >
-            ประกาศ
-          </Button>
-        </form>
+            <TextInput
+              label="ชื่อ"
+              placeholder="ชื่อจริงของผู้ป่วย"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("name")}
+            />
+            <TextInput
+              label="นามสกุล"
+              placeholder="นามสกุลของผู้ป่วย"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("surname")}
+            />
+            <TextInput
+              label="เบอร์โทรศัพท์"
+              placeholder="08XXXXXXXX"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("phonenumber")}
+            />
+            <Select
+              label="กรุ๊ปเลือด"
+              required
+              withAsterisk
+              withinPortal
+              classNames={inputStyles}
+              placeholder="กรุ๊ปเลือดของผู้ป่วย"
+              data={bloodtypes}
+              {...form.getInputProps("bloodtype")}
+            />
+            <TextInput
+              label="โรงพยาบาล"
+              placeholder="ชื่อโรงพยาบาลที่ผู้ป่วย"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("hospital")}
+            />
+            <Select
+              label="เขต"
+              required
+              withAsterisk
+              withinPortal
+              classNames={inputStyles}
+              placeholder="เขตในกทม. ที่โรงพยาบาลอยู่"
+              data={districts}
+              {...form.getInputProps("district")}
+            />
+            <DatePicker
+              label="วันที่ประสงค์รับบริจาคเลือด"
+              placeholder="วัน/เดือน/ปี"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("date")}
+            />
+            <Textarea
+              label="ช่องทางติดต่อสาธารณ และหมายเหตุ"
+              required
+              withAsterisk
+              classNames={{
+                ...inputStyles,
+                input: "font-kanit drop-shadow-lg rounded-md",
+              }}
+              radius="sm"
+              autosize
+              placeholder="เช่น ขาดเลือดด่วน 08XXXXXXXX ติดต่อที่ตึกXXXX ชั้นXXXX เวลาXXXX เป็นต้นไป"
+              {...form.getInputProps("note")}
+            />
+            <Button
+              color="pink"
+              type="submit"
+              className="bg-[#FF5D7D] w-fit px-6 text-center py-1 rounded-md shadow-lg font-kanit text-white mx-auto"
+            >
+              ประกาศ
+            </Button>
+          </form>
+        )}
       </div>
     </MobileFrame>
   );

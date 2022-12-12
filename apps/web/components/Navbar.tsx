@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import Logo from "./Logo";
 
-interface Props {}
-
 const Navbar: FC = () => {
   const router = useRouter();
 

@@ -9,8 +9,6 @@ export const bloodalertQueryClient = new QueryClient({
   },
 });
 
-console.log(process.env.NEXT_PUBLIC_BACKEND);
-
 export const backendAxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND ?? "",
   timeout: 1000,
