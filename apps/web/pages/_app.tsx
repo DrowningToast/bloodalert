@@ -6,9 +6,6 @@ import { AuthUpdater, firebaseUserAtom } from "../components/firebase";
 import { useAtom } from "jotai";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [userProfile] = useAtom(firebaseUserAtom);
-  console.log(userProfile);
-
   return (
     <QueryClientProvider client={bloodalertQueryClient}>
       <AuthUpdater />
