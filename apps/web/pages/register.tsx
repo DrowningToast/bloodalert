@@ -10,6 +10,7 @@ import {
 } from "../components/constants";
 import Logo from "../components/Logo";
 import MobileFrame from "../components/MobileFrame";
+import { motion } from "framer-motion";
 
 const RegisterPage: NextPage = () => {
   const [bloodtype, setBloodtype] = useState<undefined | iBloodtype>();
@@ -28,7 +29,18 @@ const RegisterPage: NextPage = () => {
         <h1 className="inline-block my-4 uppercase font-bold text-2xl font-jost text-[#2A3990]">
           Bloodalert
         </h1>
-        <div className="w-full rounded-t-[3rem] absolute bottom-0 inset-x-0 bg-gradient-to-b from-[#8CB7FD] to-[#D9D9D9] h-[50%] shadow-md drop-shadow flex justify-start flex-col px-8 py-12 gap-y-4">
+        <motion.div
+          initial={{
+            y: "100%",
+          }}
+          animate={{
+            y: "0%",
+            transition: {
+              delay: 1,
+            },
+          }}
+          className="w-full rounded-t-[3rem] absolute bottom-0 inset-x-0 bg-gradient-to-b from-[#8CB7FD] to-[#D9D9D9] h-[50%] shadow-md drop-shadow flex justify-start flex-col px-8 py-12 gap-y-4"
+        >
           <Select
             label="กรุ๊ปเลือด"
             placeholder="กลุ่มเลือดที่ท่านต้องการจะติดตาม"
@@ -83,7 +95,7 @@ const RegisterPage: NextPage = () => {
               ลงทะเบียน
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </div>
     </MobileFrame>
   );
