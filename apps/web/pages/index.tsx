@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import { useAtom } from "jotai";
 import { NextPage } from "next";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { firebaseReady, firebaseUserAtom } from "../components/firebase";
 import MobileFrame from "../components/MobileFrame";
