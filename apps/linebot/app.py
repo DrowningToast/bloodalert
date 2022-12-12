@@ -91,8 +91,20 @@ def reply(intent, text, reply_token, id, disname):
                 disname, user_profile[0].bloodtype, user_profile[0].district))
         line_bot_api.reply_message(reply_token, text_message)
 
+    if intent == 'news':
+        response_info = get_announcement()
+        reply_text = ""
+        for i in range(0, (len(response_info))):
+            reply_text += ("ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"
+                           % (response_info[i].bloodtype, response_info[i].district, response_info[i].hospital, response_info[i].name, response_info[i].surname))
+            if i != len(response_info)-1:
+                reply_text += "\n\n"
+        text_message = TextSendMessage(text=reply_text)
+        line_bot_api.reply_message(reply_token, text_message)
+        print("sending announcement to user", flush=True)
 
-@app.route('/announcement')
+
+@ app.route('/announcement')
 def announcement():
     # receive json
     response = requests.get('http://localhost:8080/getUsers').text
@@ -104,11 +116,9 @@ def announcement():
         and check.check_district(response_info['district'])
     date = response_info['date'].split(" ")[0].split("-")
     time = response_info['date'].split(" ")[1].split(":")
-    # print(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
-    #       response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
     if annnouncement_check == True:
-        # add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
-        #                  response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+        add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
+                         response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
         print("successfully add announcement info", flush=True)
     else:
         print("failed to add announcement info", flush=True)
@@ -117,18 +127,17 @@ def announcement():
     lst_users_id = []
     targets = get_subscriber(
         response_info['bloodtype'], response_info['district'])
-    print(targets, flush=True)
     for i in range(len(targets)):
         lst_users_id.append(targets[i-1].user_id)
     text_message = "ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
         % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
     message = TextSendMessage(text=text_message)
-    line_bot_api.multicast(lst_users_id, message)
-    print(lst_users_id, flush=True)
+    # line_bot_api.multicast(lst_users_id, message)
+    print("sending message to : ", lst_users_id, flush=True)
     return 'success'
 
 
-@app.route('/')
+@ app.route('/')
 def root():
     return 'ok'
 
@@ -138,7 +147,7 @@ def root():
 '''Get latest announcement from the database'''
 
 
-@app.route("/announcement/latest/<size>", methods=['GET'])
+@ app.route("/announcement/latest/<size>", methods=['GET'])
 def getLatestAnnouncements(size: int = 5):
     size = int(size)
     latestNews: List[Announcement] = get_announcement(size)
@@ -152,7 +161,7 @@ def getLatestAnnouncements(size: int = 5):
 '''Receive an incoming announcement POST request from the server'''
 
 
-@app.route("/announcement/new", methods=["POST"])
+@ app.route("/announcement/new", methods=["POST"])
 def post_announcement():
     # Parse incoming request's body
     req = request.get_json(silent=True, force=True)
@@ -165,7 +174,7 @@ def post_announcement():
     return 'OK'
 
 
-@app.route("/subscriber/<user_id>", methods=["PATCH"])
+@ app.route("/subscriber/<user_id>", methods=["PATCH"])
 def user(user_id):
     req_data = json.loads(request.data)
     result = update_subscriber(user_id, req_data)
