@@ -9,7 +9,7 @@ import requests
 import json
 
 from database import *
-import test
+import check
 from typing import *
 
 load_dotenv()
@@ -34,12 +34,12 @@ def callback():
     id = req['originalDetectIntentRequest']['payload']['data']['source']['userId']
     disname = line_bot_api.get_profile(id).display_name
 
-    print('id = ' + id)
-    print('name = ' + disname)
-    #  print('text = ' + text)
+    print('id = ' + id, flush=True)
+    # print('name = ' + disname)
+    # print('text = ' + text)
     # comment cause of unicode thai language
-    print('intent = ' + intent)
-    print('reply_token = ' + reply_token)
+    # print('intent = ' + intent)
+    # print('reply_token = ' + reply_token)
 
     reply(intent, text, reply_token, id, disname)
 
@@ -57,7 +57,7 @@ def reply(intent, text, reply_token, id, disname):
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
-        if test.check_bloodtype(user_bloodtype) and test.check_district(user_district):
+        if check.check_bloodtype(user_bloodtype) and check.check_district(user_district):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)
@@ -79,6 +79,7 @@ def reply(intent, text, reply_token, id, disname):
     if intent == 'test':
         text_message = TextSendMessage(text="test success")
         line_bot_api.reply_message(reply_token, text_message)
+        print(id, flush=True)
 
     if intent == 'profile':
         user_profile = update_subscriber(id)
@@ -91,39 +92,39 @@ def reply(intent, text, reply_token, id, disname):
         line_bot_api.reply_message(reply_token, text_message)
 
 
-@app.route('/test')
-def test():
+@app.route('/announcement')
+def announcement():
     # receive json
     response = requests.get('http://localhost:8080/getUsers').text
     response_info = json.loads(response)
 
     # add_announcement to db
-    annnouncement_check = test.check_name(response_info['name']) and test.check_surname(response_info['surname']) and test.check_age(response_info['age'])\
-        and test.check_phonenumber(response_info['phonenumber']) and test.check_bloodtype(response_info['bloodtype']) and test.check_hospital(response_info['hospital'])\
-        and test.check_district(response_info['district'])
+    annnouncement_check = check.check_name(response_info['name']) and check.check_surname(response_info['surname']) and check.check_age(response_info['age'])\
+        and check.check_phonenumber(response_info['phonenumber']) and check.check_bloodtype(response_info['bloodtype']) and check.check_hospital(response_info['hospital'])\
+        and check.check_district(response_info['district'])
     date = response_info['date'].split(" ")[0].split("-")
     time = response_info['date'].split(" ")[1].split(":")
-    print(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
-          response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+    # print(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
+    #       response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
     if annnouncement_check == True:
-        add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
-                         response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+        # add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
+        #                  response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
         print("successfully add announcement info", flush=True)
     else:
         print("failed to add announcement info", flush=True)
 
     # multicast to user
-    user_ids = ["U59f17870b2143e19c8ffb7de23c5151f"]  # list for the test
     lst_users_id = []
     targets = get_subscriber(
         response_info['bloodtype'], response_info['district'])
+    print(targets, flush=True)
     for i in range(len(targets)):
         lst_users_id.append(targets[i-1].user_id)
     text_message = "ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
         % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
     message = TextSendMessage(text=text_message)
-    # *** lst_users_id cannot be used cause of make up line id in db ***
-    line_bot_api.multicast(user_ids, message)
+    line_bot_api.multicast(lst_users_id, message)
+    print(lst_users_id, flush=True)
     return 'success'
 
 
