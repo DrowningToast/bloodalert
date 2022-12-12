@@ -1,9 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "$NEXT_PUBLIC_BACKEND"
+  ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     },
     "lint": {
       "outputs": []
