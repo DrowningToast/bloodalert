@@ -13,6 +13,9 @@ import {
   signinWithGooglePopUp,
 } from "../components/firebase";
 import { IconBrandGoogle } from "@tabler/icons";
+import { useMutation } from "react-query";
+import { mutateNewAnnouncement } from "../components/QueryFunctions";
+import { IAnnouncement } from "../components/types/responses";
 
 const inputStyles = {
   label: "font-kanit",
@@ -66,6 +69,10 @@ const Announcement: NextPage = () => {
   const [userProfile] = useAtom(firebaseUserAtom);
   const [userReady] = useAtom(firebaseReady);
 
+  const { isLoading, isError, data, mutate } = useMutation({
+    mutationFn: mutateNewAnnouncement,
+  });
+
   return (
     <MobileFrame disableBg>
       <div className="bg-[#ECF0F3] w-full h-full overflow-y-auto">
@@ -101,7 +108,7 @@ const Announcement: NextPage = () => {
           </div>
         ) : (
           <form
-            onSubmit={form.onSubmit((data) => console.log(data))}
+            onSubmit={form.onSubmit((data) => mutate(data as IAnnouncement))}
             className="px-6 py-4 flex flex-col gap-y-2"
           >
             <TextInput

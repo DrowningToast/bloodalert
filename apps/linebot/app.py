@@ -121,6 +121,8 @@ def root():
 
 """API Endpoint for fetching latest announcement from the database"""
 
+'''Get latest announcement from the database'''
+
 
 @app.route("/announcement/latest/<size>", methods=['GET'])
 def getLatestAnnouncements(size: int = 5):
@@ -131,6 +133,16 @@ def getLatestAnnouncements(size: int = 5):
     for news in latestNews:
         bufferNews.append(news.to_dict())
     return bufferNews
+
+
+'''Receive an incoming announcement POST request from the server'''
+
+
+@app.route("/announcement/new", methods=["POST"])
+def post_announcement():
+    req = request.get_json(silent=True, force=True)
+    add_announcement(req)
+    return 'OK'
 
 
 @app.route("/subscriber/<user_id>", methods=["PATCH"])

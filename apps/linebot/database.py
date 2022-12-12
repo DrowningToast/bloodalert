@@ -68,14 +68,14 @@ def get_announcement(size: int = 5) -> list:
 
 
 @db_session
-def add_annoucement(name: str, surname: str, age: int, phonenumber: str, bloodtype: str) -> Announcement:
-    new_annoucement = Announcement(
+def add_announcement(name: str, surname: str, age: int, phonenumber: str, bloodtype: str) -> Announcement:
+    new_announcement = Announcement(
         name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype)
     return Announcement
 
 
 @db_session
-def update_annoucement(req_user_id, req_data) -> Announcement:
+def update_announcement(req_user_id, req_data) -> Announcement:
     user = Announcement.get(user_id=req_user_id)
     # selected_user = select(subscribe for subscribe in  Subscriber if subscribe.user_id == req_user_id).get()
     user.set(**req_data)
@@ -83,7 +83,7 @@ def update_annoucement(req_user_id, req_data) -> Announcement:
 
 
 @db_session
-def remove_annoucement(user_id: str) -> Announcement:
+def remove_announcement(user_id: str) -> Announcement:
     Announcement.select(lambda sub: sub.user_id == user_id).delete()
-    # delete_annoucement = Announcement(user_id=user_id).delete()
+    # delete_announcement = Announcement(user_id=user_id).delete()
     return ("success")

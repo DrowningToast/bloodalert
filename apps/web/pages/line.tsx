@@ -71,7 +71,7 @@ const LinePage: NextPage = () => {
             </div>
             <Link
               target={"_blank"}
-              href="http://google.com"
+              href="https://line.me/ti/p/%40785jhkvq"
               className="inline-block w-fit"
             >
               <Button
