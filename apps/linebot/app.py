@@ -91,6 +91,29 @@ def reply(intent, text, reply_token, id, disname):
         line_bot_api.reply_message(reply_token, text_message)
 
 
+@app.route('/test')
+def test():
+    lst_users_id = []  # actually use this list
+    user_ids = ["U59f17870b2143e19c8ffb7de23c5151f"]  # list for the test
+
+    # receive json api
+    response = requests.get('http://localhost:8080/getUsers').text
+    response_info = json.loads(response)
+    targets = get_subscriber(
+        response_info['bloodtype'], response_info['district'])
+    for i in range(len(targets)):
+        lst_users_id.append(targets[i-1].user_id)
+
+    text_message = "URGENT ! \nIn need of group %s blood type\nanyone in %s area at %s that can help please come.\nName : %s   Surname : %s"\
+        % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
+
+    message = TextSendMessage(text=text_message)
+    # lst_users_id cannot be used cause of make up line id in db
+    line_bot_api.multicast(user_ids, message)
+    # print (text_message, flush=True)
+    return 'success'
+
+
 @app.route('/')
 def root():
     return 'ok'
