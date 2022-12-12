@@ -1,10 +1,15 @@
 import { Button } from "@mantine/core";
+import { useAtom } from "jotai";
 import { NextPage } from "next";
 import Link from "next/link";
+import { firebaseReady, firebaseUserAtom } from "../components/firebase";
 import MobileFrame from "../components/MobileFrame";
 import Navbar from "../components/Navbar";
 
 const Index: NextPage = () => {
+  const [userProfile] = useAtom(firebaseUserAtom);
+  const [userReady] = useAtom(firebaseReady);
+
   return (
     <MobileFrame disableBg>
       <div className="bg-gradient-to-bl from-[#FFFFFF] to-[#75A8F8] w-full h-full">
@@ -13,7 +18,6 @@ const Index: NextPage = () => {
         </div>
         <div className="relative px-4 py-8">
           <div className="bg-white rounded-full absolute h-96 w-96 bottom-16 left-6 scale-x-[170%] scale-y-[200%] z-0"></div>
-
           <div className="relative">
             <h1 className="z-10 font-jost uppercase text-4xl text-[#2A3990] font-bold my-2">
               Bloodalert
@@ -38,6 +42,13 @@ const Index: NextPage = () => {
             </Link>
           </div>
         </div>
+        {userReady && userProfile && (
+          <span className="text-center absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm font-kanit text-gray-500 underline">
+            <Link href="/signout">
+              กำลังอยู่ในระบบ คลิกตรงนี้เพื่อออกจากระบบ
+            </Link>
+          </span>
+        )}
       </div>
     </MobileFrame>
   );
