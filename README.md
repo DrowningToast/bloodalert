@@ -4,7 +4,7 @@ This is the repository for Bloodalert project.
 
 ## What's inside?
 
-This project uses [Pnpm](https://pnpm.io/) as a package manager. It includes the following packages/apps:
+This project uses [pnpm](https://pnpm.io/) as a package manager. It includes the following packages/apps:
 
 ### Apps and Packages
 
@@ -39,8 +39,14 @@ To start locally running the project or deploy you need to have the following te
 - Python 3
 - Node js
 - pnpm
+- LINE Bot account
+- Firebase project
 
 ### Setup
+
+Before running the setup script, environment variables are required to be setup first.
+
+Begin by duplicating .env.example to the root directory and apps/web. The .env configures the database name, username and database then LINE bot account channel access token and channel secret. And lastly Firebase configuration is required and began with NEXT_PUBLIC\_ prefix.
 
 To run the setup script, run the following command:
 
@@ -48,7 +54,7 @@ To run the setup script, run the following command:
 npm run setup
 ```
 
-or run the following command if you got Yarn already installed
+or run the following command if you got pnpm already installed
 
 ```
 pnpm run setup
