@@ -2,8 +2,9 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClientProvider } from "react-query";
 import { bloodalertQueryClient } from "../components/QueryClient";
-import { AuthUpdater, firebaseUserAtom } from "../components/firebase";
+// import { AuthUpdater, firebaseUserAtom } from "../components/firebase";
 import { NextSeo } from "next-seo";
+import { AuthUpdater } from "../components/firebase";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
