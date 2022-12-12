@@ -45,7 +45,7 @@ def add_subscriber(bloodtype: str, district: str, user_id: str) -> Subscriber:
 
 
 @db_session
-def update_subscriber(req_user_id) -> list:
+def update_subscriber(req_user_id: str) -> list:
     user = Subscriber.select(lambda sub: sub.user_id == req_user_id)[:]
     return list(user)
 
@@ -71,11 +71,11 @@ def get_announcement(size: int = 5) -> list:
 def add_announcement(name: str, surname: str, age: int, phonenumber: str, bloodtype: str) -> Announcement:
     new_announcement = Announcement(
         name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype)
-    return Announcement
+    return new_announcement
 
 
 @db_session
-def update_announcement(req_user_id, req_data) -> Announcement:
+def update_announcement(req_user_id: str, req_data: Announcement) -> Announcement:
     user = Announcement.get(user_id=req_user_id)
     # selected_user = select(subscribe for subscribe in  Subscriber if subscribe.user_id == req_user_id).get()
     user.set(**req_data)
@@ -83,7 +83,7 @@ def update_announcement(req_user_id, req_data) -> Announcement:
 
 
 @db_session
-def remove_announcement(user_id: str) -> Announcement:
+def remove_announcement(user_id: str) -> None:
     Announcement.select(lambda sub: sub.user_id == user_id).delete()
     # delete_announcement = Announcement(user_id=user_id).delete()
-    return ("success")
+    return None
