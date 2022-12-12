@@ -9,9 +9,8 @@ import requests
 import json
 
 from database import *
-from test import *
+import test
 from typing import *
-
 
 load_dotenv()
 
@@ -58,7 +57,7 @@ def reply(intent, text, reply_token, id, disname):
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
-        if check_bloodtype(user_bloodtype) and check_district(user_district):
+        if test.check_bloodtype(user_bloodtype) and test.check_district(user_district):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)
@@ -99,9 +98,9 @@ def test():
     response_info = json.loads(response)
 
     # add_announcement to db
-    annnouncement_check = check_name(response_info['name']) and check_surname(response_info['surname']) and check_age(response_info['age'])\
-        and check_phonenumber(response_info['phonenumber']) and check_bloodtype(response_info['bloodtype']) and check_hospital(response_info['hospital'])\
-        and check_district(response_info['district'])
+    annnouncement_check = test.check_name(response_info['name']) and test.check_surname(response_info['surname']) and test.check_age(response_info['age'])\
+        and test.check_phonenumber(response_info['phonenumber']) and test.check_bloodtype(response_info['bloodtype']) and test.check_hospital(response_info['hospital'])\
+        and test.check_district(response_info['district'])
     date = response_info['date'].split(" ")[0].split("-")
     time = response_info['date'].split(" ")[1].split(":")
     print(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
