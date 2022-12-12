@@ -12,7 +12,6 @@ class Announcement(db.Entity):
     district = Required(str)
     date = Required(datetime.datetime)
     note = Required(str)
-    user_id = Required(str)
 
 class Subscriber(db.Entity):
     bloodtype = Required(str)
