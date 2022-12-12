@@ -9,7 +9,7 @@ import requests
 import json
 
 from database import *
-from .test import *
+from test import *
 from typing import *
 
 
@@ -58,7 +58,7 @@ def reply(intent, text, reply_token, id, disname):
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
-        if check_name(user_bloodtype) and check_district(user_district):
+        if check_bloodtype(user_bloodtype) and check_district(user_district):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)
@@ -94,24 +94,37 @@ def reply(intent, text, reply_token, id, disname):
 
 @app.route('/test')
 def test():
-    lst_users_id = []  # actually use this list
-    user_ids = ["U59f17870b2143e19c8ffb7de23c5151f"]  # list for the test
-
-    # receive json api
+    # receive json
     response = requests.get('http://localhost:8080/getUsers').text
     response_info = json.loads(response)
+
+    # add_announcement to db
+    annnouncement_check = check_name(response_info['name']) and check_surname(response_info['surname']) and check_age(response_info['age'])\
+        and check_phonenumber(response_info['phonenumber']) and check_bloodtype(response_info['bloodtype']) and check_hospital(response_info['hospital'])\
+        and check_district(response_info['district'])
+    date = response_info['date'].split(" ")[0].split("-")
+    time = response_info['date'].split(" ")[1].split(":")
+    print(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
+          response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+    if annnouncement_check == True:
+        add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
+                         response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+        print("successfully add announcement info", flush=True)
+    else:
+        print("failed to add announcement info", flush=True)
+
+    # multicast to user
+    user_ids = ["U59f17870b2143e19c8ffb7de23c5151f"]  # list for the test
+    lst_users_id = []
     targets = get_subscriber(
         response_info['bloodtype'], response_info['district'])
     for i in range(len(targets)):
         lst_users_id.append(targets[i-1].user_id)
-
-    text_message = "URGENT ! \nIn need of group %s blood type\nanyone in %s area at %s that can help please come.\nName : %s   Surname : %s"\
+    text_message = "ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
         % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
-
     message = TextSendMessage(text=text_message)
-    # lst_users_id cannot be used cause of make up line id in db
+    # *** lst_users_id cannot be used cause of make up line id in db ***
     line_bot_api.multicast(user_ids, message)
-    # print (text_message, flush=True)
     return 'success'
 
 
