@@ -14,7 +14,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "setup:python": "pip3 install -r requirements.txt",
-    "setup": "npm i yarn && yarn install && yarn run setup:python && docker-compose up -d --build"
+    "setup": "npm i pnpm && pnpm install && pnpm run setup:python && docker-compose up -d --build"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
@@ -25,7 +25,6 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "yarn": "^1.22.19"
-  },
-  "packageManager": "yarn@1.22.19"
+    "pnpm": "^7.18.1"
+  }
 }

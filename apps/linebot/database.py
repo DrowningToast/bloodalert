@@ -52,7 +52,13 @@ def remove_subscriber(user_id):
     # Subscriber(user_id=user_id).delete()
     return ("success")
 
-#annoucement
+'''Announcement Related Functions'''
+@db_session
+def get_announcement(size: int = 5) -> list:
+    targets = Announcement.select()
+    list_targets = list(targets)[-1 * size:]
+    return list_targets
+
 @db_session
 def add_annoucement(name, surname, age, phonenumber, bloodtype):
     new_annoucement = Announcement(name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype)

@@ -4,7 +4,7 @@ This is the repository for Bloodalert project.
 
 ## What's inside?
 
-This project uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+This project uses [Pnpm](https://pnpm.io/) as a package manager. It includes the following packages/apps:
 
 ### Apps and Packages
 
@@ -19,7 +19,7 @@ To build all apps and packages, run the following command:
 
 ```
 cd my-turborepo
-yarn run build
+pnpm run build
 ```
 
 ### Develop
@@ -28,7 +28,7 @@ To develop all apps and packages, run the following command:
 
 ```
 cd my-turborepo
-yarn run dev
+pnpm run dev
 ```
 
 ### Requirements
@@ -38,7 +38,7 @@ To start locally running the project or deploy you need to have the following te
 - Docker
 - Python 3
 - Node js
-- Yarn
+- pnpm
 
 ### Setup
 
@@ -51,7 +51,7 @@ npm run setup
 or run the following command if you got Yarn already installed
 
 ```
-yarn run setup
+pnpm run setup
 ```
 
 The setup script will automatically pull, install and setup
