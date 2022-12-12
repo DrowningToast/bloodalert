@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 import os
 import requests
 import json
+
 from database import *
-from test import *
+from .test import *
 from typing import *
 
 
@@ -57,7 +58,7 @@ def reply(intent, text, reply_token, id, disname):
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
-        if check_bloodtype(user_bloodtype) and check_district(user_district):
+        if check_name(user_bloodtype) and check_district(user_district):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)

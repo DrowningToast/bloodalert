@@ -7,7 +7,7 @@ Return: True if valid
 """
 
 
-def check_name(name):
+def check_name(name: str):
     condition_1 = len(name) <= 160
     condition_2 = isinstance(name, str)
     return condition_1 and condition_2
@@ -20,7 +20,7 @@ Return: True if valid
 """
 
 
-def check_surname(surname):
+def check_surname(surname: str):
     condition_1 = len(surname) <= 160
     condition_2 = isinstance(surname, str)
     return condition_1 and condition_2
@@ -33,9 +33,9 @@ Return: True if valid
 """
 
 
-def check_hospital(surname):
-    condition_1 = len(surname) <= 160
-    condition_2 = isinstance(surname, str)
+def check_hospital(hospital: str):
+    condition_1 = len(hospital) <= 160
+    condition_2 = isinstance(hospital, str)
     return condition_1 and condition_2
 
 
@@ -46,7 +46,7 @@ Return: True if valid
 """
 
 
-def check_age(age):
+def check_age(age: int):
     condition_1 = age > 0 and age < 150
     condition_2 = isinstance(age, int)
     return condition_1 and condition_2
@@ -59,7 +59,7 @@ Return: True if valid
 """
 
 
-def check_phonenumber(phonenumber):
+def check_phonenumber(phonenumber: str):
     condition_1 = len(phonenumber) == 9 or len(phonenumber) == 10
     condition_2 = isinstance(phonenumber, str)
     return condition_1 and condition_2
@@ -72,7 +72,7 @@ Return: True if valid
 """
 
 
-def check_bloodtype(bloodtype):
+def check_bloodtype(bloodtype: str):
     bloodtype = bloodtype.upper()
     condition_1 = isinstance(bloodtype, str)
     condition_2 = bloodtype in bloodtypes
@@ -86,7 +86,7 @@ Return: True if valid
 """
 
 
-def check_district(district):
+def check_district(district: str):
     condition_1 = isinstance(district, str)
     condition_2 = district in all_district
     return condition_1 and condition_2
