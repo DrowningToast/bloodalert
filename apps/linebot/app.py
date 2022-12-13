@@ -96,11 +96,14 @@ def reply(intent, text, reply_token, id, disname):
     if intent == 'news':
         response_info = get_announcement()
         reply_text = ""
-        for i in range(0, (len(response_info))):
-            reply_text += ("ประกาศด่วน ! \nตอนนี้ต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"
-                           % (response_info[i].bloodtype, response_info[i].district, response_info[i].hospital, response_info[i].name, response_info[i].surname))
-            if i != len(response_info)-1:
-                reply_text += "\n\n"
+        if len(response_info) == 0:
+            reply_text = "ตอนนี้ยังไม่มีข่าวสารประกาศ"
+        else:
+            for i in range(0, (len(response_info))):
+                reply_text += ("ประกาศด่วน ! \nตอนนี้ต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"
+                               % (response_info[i].bloodtype, response_info[i].district, response_info[i].hospital, response_info[i].name, response_info[i].surname))
+                if i != len(response_info)-1:
+                    reply_text += "\n\n"
         text_message = TextSendMessage(text=reply_text)
         line_bot_api.reply_message(reply_token, text_message)
         print("sending announcement to user", flush=True)
