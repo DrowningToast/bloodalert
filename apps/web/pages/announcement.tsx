@@ -23,6 +23,7 @@ import { IconBrandGoogle } from "@tabler/icons";
 import { useMutation } from "react-query";
 import { mutateNewAnnouncement } from "../components/QueryFunctions";
 import { IAnnouncement } from "../components/types/responses";
+import { useRouter } from "next/router";
 
 const inputStyles = {
   label: "font-kanit",
@@ -76,6 +77,8 @@ const Announcement: NextPage = () => {
   const [userProfile] = useAtom(firebaseUserAtom);
   const [userReady] = useAtom(firebaseReady);
 
+  const router = useRouter();
+
   const { isLoading, isError, data, mutate } = useMutation({
     mutationFn: mutateNewAnnouncement,
   });
@@ -115,7 +118,16 @@ const Announcement: NextPage = () => {
           </div>
         ) : (
           <form
-            onSubmit={form.onSubmit((data) => mutate(data as IAnnouncement))}
+            onSubmit={form.onSubmit(async (data) => {
+              try {
+                mutate(data as IAnnouncement);
+                alert("ประกาศสำเร็จ สามารถรอการติดต่อได้เลย");
+                router.push("/");
+              } catch (error) {
+                alert("An error has occured");
+                console.log(error);
+              }
+            })}
             className="px-6 py-4 flex flex-col gap-y-2"
           >
             <TextInput

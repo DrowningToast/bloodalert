@@ -50,13 +50,20 @@ def callback():
 '''check intent'''
 
 
-def reply(intent, text, reply_token, id, disname):
+def reply(intent: str, text: str, reply_token, id, disname):
     if intent == 'add_subscribe':
-        text1 = text.split("\n")
-        splited_bloodtype, splied_district = text1[1].split(
-            ":"), text1[2].split(":")
-        user_bloodtype, user_district = splited_bloodtype[1].replace(
-            " ", ""), splied_district[1].replace(" ", "", 1)
+        # bloodtype index
+        user_bloodtype = text[text.find(
+            'Bloodtype'):].replace('Bloodtype', '').replace(':', '').lstrip(' ')[0]
+        text_district = text[text.find('District'):].replace('District', "")
+        user_district = text_district[text_district.find(
+            ':'):].replace(':', '').lstrip(' ')
+
+        # text1 = text.split("\n")
+        # splited_bloodtype, splied_district = text1[1].split(
+        #     ":"), text1[2].split(":")
+        # user_bloodtype, user_district = splited_bloodtype[1].replace(
+        #     " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
         if check.check_bloodtype(user_bloodtype) and check.check_district(user_district):
             if len(exist) > 0:
@@ -65,6 +72,8 @@ def reply(intent, text, reply_token, id, disname):
             text_message = TextSendMessage(
                 text="ทำการบันทึกข้อมูลของคุณเรียบร้อยแล้ว ขอบคุณที่สมัครรับข่าวสาร")
         else:
+            print(user_bloodtype, flush=True)
+            print(user_district, flush=True)
             text_message = TextSendMessage(
                 text="ข้อมูลของคุณมีข้อผิดพลาด กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
         line_bot_api.reply_message(reply_token, text_message)
@@ -136,7 +145,10 @@ def announcement():
         lst_users_id.append(targets[i-1].user_id)
     text_message = "ประกาศด่วน ! \nมีความต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณ  เขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
         % (response_info['bloodtype'], thai_district[response_info['district']], response_info['hospital'], response_info['name'], response_info['surname'])
+    print(text_message, flush=True)
     message = TextSendMessage(text=text_message)
+    if len(lst_users_id) <= 0:
+        return 'sucess (received none)'
     line_bot_api.multicast(lst_users_id, message)
     print("sending message to : ", lst_users_id, flush=True)
     return 'success'
@@ -164,19 +176,6 @@ def getLatestAnnouncements(size: int = 5):
 
 
 '''Receive an incoming announcement POST request from the server'''
-
-
-@ app.route("/announcement/new", methods=["POST"])
-def post_announcement():
-    # Parse incoming request's body
-    req = request.get_json(silent=True, force=True)
-
-    # use the data received to multicast the message to other LINE users respectively.
-    # Send(data)
-
-    # Create a new Announcement record/entity
-    add_announcement(**req)
-    return 'OK'
 
 
 @ app.route("/subscriber/<user_id>", methods=["PATCH"])
