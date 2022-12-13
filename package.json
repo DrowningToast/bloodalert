@@ -13,7 +13,8 @@
     "dev:linebot": "turbo run dev --filter=linebot",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "setup:python": "pip3 install -r requirements.txt",
+    "compose": "docker-compose -f docker-compose.prod.yml up -d --build",
+    "setup:python": "pip3 install -r apps/linebot/requirements.txt",
     "setup": "npm i pnpm && pnpm install && pnpm run setup:python && docker-compose up -d --build"
   },
   "devDependencies": {
