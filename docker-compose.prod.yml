@@ -43,8 +43,19 @@ services:
       - CHANNEL_SECRET=${CHANNEL_SECRET}
       - DATABASE_URL=postgres
     ports:
-      - 80:5000
+      - 5000:5000
     depends_on:
       - postgres
     networks:
       - prinet
+
+  nginx-proxy:
+    image: "jc21/nginx-proxy-manager:latest"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
