@@ -11,7 +11,7 @@ import Navbar from "../components/Navbar";
 const LinePage: NextPage = () => {
   const router = useRouter();
   const commandString = useMemo<string>(() => {
-    return `Bloodtype : ${router.query?.bloodtype}\nDistrict : ${router.query?.district}`;
+    return `Subscribe\n Bloodtype : ${router.query?.bloodtype}\nDistrict : ${router.query?.district}`;
   }, [router.query.bloodtype, router.query.district]);
 
   if (!router.query.district || !router.query.bloodtype)
@@ -51,8 +51,9 @@ const LinePage: NextPage = () => {
           </div>
           <div className="w-full">
             <div className="bg-white mt-8 mx-12 px-4 pt-4 rounded-md relative pb-12 text-sm">
-              <p>{commandString.split("\n")[0]}</p>
+              <p>Subscribe</p>
               <p>{commandString.split("\n")[1]}</p>
+              <p>{commandString.split("\n")[2]}</p>
 
               <CopyButton value={commandString}>
                 {({ copied, copy }) => (
