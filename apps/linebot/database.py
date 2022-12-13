@@ -68,10 +68,10 @@ def get_announcement(size: int = 5) -> list:
 
 
 @db_session
-def add_announcement(name: str, surname: str, age: int, phonenumber: str, bloodtype: str) -> Announcement:
+def add_announcement(name: str, surname: str, age: int, phonenumber: str, bloodtype: str, hospital: str, district: str, date, note: str) -> Announcement:
     new_announcement = Announcement(
-        name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype)
-    return new_announcement
+        name=name, surname=surname, age=age, phonenumber=phonenumber, bloodtype=bloodtype, hospital=hospital, district=district, date=date, note=note)
+    return Announcement
 
 
 @db_session
