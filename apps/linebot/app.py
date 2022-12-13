@@ -112,8 +112,7 @@ def reply(intent, text, reply_token, id, disname):
 @ app.route('/announcement')
 def announcement():
     # receive json
-    response = requests.get('http://localhost:8080/getUsers').text
-    response_info = json.loads(response)
+    response_info = request.get_json(silent=True, force=True)
 
     # add_announcement to db
     annnouncement_check = check.check_name(response_info['name']) and check.check_surname(response_info['surname']) and check.check_age(response_info['age'])\
