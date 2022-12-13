@@ -1,0 +1,61 @@
+version: "3"
+networks:
+  prinet:
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: bloodalert-uptime-kuma
+    volumes:
+      - ./uptime-kuma-data:/app/data
+    ports:
+      - 4001:3001
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: bloodalert-db
+    image: postgres:14.5-alpine
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg-db:/var/lib/postgresql/data
+    networks:
+      - prinet
+
+  backend:
+    container_name: bloodalert-backend
+    build:
+      context: ./apps/linebot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - CHANNEL_ACCESS_TOKEN=${CHANNEL_ACCESS_TOKEN}
+      - CHANNEL_SECRET=${CHANNEL_SECRET}
+      - DATABASE_URL=postgres
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres
+    networks:
+      - prinet
+
+  nginx-proxy:
+    image: "jc21/nginx-proxy-manager:latest"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
