@@ -21,8 +21,6 @@ CORS(app)
 
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
-database_url = os.getenv('DATABASE_URL') if os.getenv(
-    "DATABASE_URL") else "localhost"
 
 
 @app.route("/callback", methods=['GET', 'POST'])

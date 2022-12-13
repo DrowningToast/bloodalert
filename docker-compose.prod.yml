@@ -41,7 +41,7 @@ services:
     environment:
       - CHANNEL_ACCESS_TOKEN=${CHANNEL_ACCESS_TOKEN}
       - CHANNEL_SECRET=${CHANNEL_SECRET}
-      - DATABASE_URL=bloodalert-db
+      - DATABASE_URL=postgres
     ports:
       - 80:80
     depends_on:

@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+import os
 import datetime
 from pony.orm import *
 db = Database()
@@ -21,8 +23,14 @@ class Subscriber(db.Entity):
     user_id = Required(str, unique=True)
 
 
+load_dotenv()
+
+
+database_url = os.getenv('DATABASE_URL') if os.getenv(
+    "DATABASE_URL") else "localhost"
+
 db.bind(provider='postgres', user='bloodalert', password='bloodalert',
-        host='bloodalert', database='bloodalert')
+        host=database_url, database='bloodalert')
 
 db.generate_mapping(create_tables=True, check_tables=True)
 set_sql_debug(True)
