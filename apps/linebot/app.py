@@ -53,8 +53,9 @@ def callback():
 def reply(intent: str, text: str, reply_token, id, disname):
     if intent == 'add_subscribe':
         # bloodtype index
-        text_bloodtype = text.replace(' ', '')
-        user_bloodtype = text_bloodtype[text_bloodtype.find(
+        print(text[text.find(
+            'bloodtype'):], flush=True)
+        user_bloodtype = text[text.find(
             'bloodtype'):].replace('bloodtype', '').replace(':', '').lstrip(' ')[0]
         text_district = text[text.find('District'):].replace('District', "")
         user_district = text_district[text_district.find(
