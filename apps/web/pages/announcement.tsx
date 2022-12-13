@@ -2,7 +2,14 @@ import { NextPage } from "next";
 import MobileFrame from "../components/MobileFrame";
 import Navbar from "../components/Navbar";
 import { useForm } from "@mantine/form";
-import { Button, Loader, Select, Textarea, TextInput } from "@mantine/core";
+import {
+  Button,
+  Loader,
+  NumberInput,
+  Select,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 import { bloodtypes, districts } from "../components/constants";
 import { DatePicker } from "@mantine/dates";
 import { z } from "zod";
@@ -126,6 +133,14 @@ const Announcement: NextPage = () => {
               withAsterisk
               classNames={inputStyles}
               {...form.getInputProps("surname")}
+            />
+            <NumberInput
+              label="อายุ"
+              placeholder="อายุของผู้ป่วย"
+              required
+              withAsterisk
+              classNames={inputStyles}
+              {...form.getInputProps("age")}
             />
             <TextInput
               label="เบอร์โทรศัพท์"
