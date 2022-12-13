@@ -169,19 +169,6 @@ def getLatestAnnouncements(size: int = 5):
 '''Receive an incoming announcement POST request from the server'''
 
 
-@ app.route("/announcement/new", methods=["POST"])
-def post_announcement():
-    # Parse incoming request's body
-    req = request.get_json(silent=True, force=True)
-
-    # use the data received to multicast the message to other LINE users respectively.
-    # Send(data)
-
-    # Create a new Announcement record/entity
-    add_announcement(**req)
-    return 'OK'
-
-
 @ app.route("/subscriber/<user_id>", methods=["PATCH"])
 def user(user_id):
     req_data = json.loads(request.data)
