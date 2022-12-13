@@ -11,9 +11,6 @@ export const fetchNews = async () => {
 
 export const mutateNewAnnouncement = async (payload: IAnnouncement) => {
   console.log(payload);
-  const response = await backendAxiosInstance.post(
-    "/announcement/new",
-    payload
-  );
+  const response = await backendAxiosInstance.post("/announcement", payload);
   return response;
 };
