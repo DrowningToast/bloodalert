@@ -138,6 +138,8 @@ def announcement():
         % (response_info['bloodtype'], thai_district[response_info['district']], response_info['hospital'], response_info['name'], response_info['surname'])
     print(text_message, flush=True)
     message = TextSendMessage(text=text_message)
+    if len(lst_users_id) <= 0:
+        return 'sucess (received none)'
     line_bot_api.multicast(lst_users_id, message)
     print("sending message to : ", lst_users_id, flush=True)
     return 'success'
