@@ -120,7 +120,7 @@ def announcement():
         and check.check_phonenumber(response_info['phonenumber']) and check.check_bloodtype(response_info['bloodtype']) and check.check_hospital(response_info['hospital'])\
         and check.check_district(response_info['district'])
     date = response_info['date'].split("T")[0].split("-")
-    time = response_info['date'].split("T")[1].split(":")
+    time = response_info['date'].split("T")[1].replace('Z', '').split(":")
     if annnouncement_check == True:
         add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
                          response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
