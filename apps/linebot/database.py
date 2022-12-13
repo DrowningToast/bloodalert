@@ -22,7 +22,7 @@ class Subscriber(db.Entity):
 
 
 db.bind(provider='postgres', user='bloodalert', password='bloodalert',
-        host='localhost', database='bloodalert')
+        host='bloodalert', database='bloodalert')
 
 db.generate_mapping(create_tables=True, check_tables=True)
 set_sql_debug(True)
