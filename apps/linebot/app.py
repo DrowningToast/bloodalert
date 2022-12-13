@@ -61,10 +61,11 @@ def reply(intent, text, reply_token, id, disname):
             if len(exist) > 0:
                 remove_subscriber(id)
             add_subscriber(user_bloodtype, user_district, id)
-            text_message = TextSendMessage(text="ขอบคุณที่ติดตามข่าวสาร")
+            text_message = TextSendMessage(
+                text="ทำการบันทึกข้อมูลของคุณเรียบร้อยแล้ว ขอบคุณที่สมัครรับข่าวสาร")
         else:
             text_message = TextSendMessage(
-                text="กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
+                text="ข้อมูลของคุณมีข้อผิดพลาด กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
         line_bot_api.reply_message(reply_token, text_message)
 
     '''remove subscriber from database'''
@@ -85,7 +86,7 @@ def reply(intent, text, reply_token, id, disname):
         user_profile = update_subscriber(id)
         if len(user_profile) == 0:
             text_message = TextSendMessage(
-                text="เรายังไม่พบข้อมูลของคุณ%s กรุณาลงทะเบียนก่อน" % disname)
+                text="เรายังไม่พบข้อมูลของคุณ%s กรุณาลงทะเบียนข้อมูลของคุณก่อน" % disname)
         else:
             text_message = TextSendMessage(text="ข้อมูลส่วนบุคคลของคุณ %s คือ\nกลุ่มโลหิต : %s\nเขต : %s" % (
                 disname, user_profile[0].bloodtype, user_profile[0].district))
@@ -95,7 +96,7 @@ def reply(intent, text, reply_token, id, disname):
         response_info = get_announcement()
         reply_text = ""
         for i in range(0, (len(response_info))):
-            reply_text += ("ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"
+            reply_text += ("ประกาศด่วน ! \nตอนนี้ต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"
                            % (response_info[i].bloodtype, response_info[i].district, response_info[i].hospital, response_info[i].name, response_info[i].surname))
             if i != len(response_info)-1:
                 reply_text += "\n\n"
@@ -129,7 +130,7 @@ def announcement():
         response_info['bloodtype'], response_info['district'])
     for i in range(len(targets)):
         lst_users_id.append(targets[i-1].user_id)
-    text_message = "ประกาศด่วน ! \nตอนนี้มีต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
+    text_message = "ประกาศด่วน ! \nตอนนี้ต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
         % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
     message = TextSendMessage(text=text_message)
     # line_bot_api.multicast(lst_users_id, message)
