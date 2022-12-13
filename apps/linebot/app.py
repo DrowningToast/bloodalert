@@ -114,6 +114,7 @@ def announcement():
     # receive json
     response_info = request.get_json(silent=True, force=True)
 
+    print(response_info['phonenumber'], flush=True)
     # add_announcement to db
     annnouncement_check = check.check_name(response_info['name']) and check.check_surname(response_info['surname']) and check.check_age(response_info['age'])\
         and check.check_phonenumber(response_info['phonenumber']) and check.check_bloodtype(response_info['bloodtype']) and check.check_hospital(response_info['hospital'])\
