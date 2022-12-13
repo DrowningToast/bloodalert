@@ -50,13 +50,20 @@ def callback():
 '''check intent'''
 
 
-def reply(intent, text, reply_token, id, disname):
+def reply(intent: str, text: str, reply_token, id, disname):
     if intent == 'add_subscribe':
-        text1 = text.split("\n")
-        splited_bloodtype, splied_district = text1[1].split(
-            ":"), text1[2].split(":")
-        user_bloodtype, user_district = splited_bloodtype[1].replace(
-            " ", ""), splied_district[1].replace(" ", "", 1)
+        # bloodtype index
+        text_bloodtype = text.replace(' ', '')
+        user_bloodtype = text_bloodtype[text_bloodtype.find(
+            'bloodtype'):].replace('bloodtype:', '')[0]
+        text_district = text[text.find('District'):].replace('District', "")
+        user_district = text_district[text_district.find(':'):].lstrip(' ')
+
+        # text1 = text.split("\n")
+        # splited_bloodtype, splied_district = text1[1].split(
+        #     ":"), text1[2].split(":")
+        # user_bloodtype, user_district = splited_bloodtype[1].replace(
+        #     " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
         if check.check_bloodtype(user_bloodtype) and check.check_district(user_district):
             if len(exist) > 0:
