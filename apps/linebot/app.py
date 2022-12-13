@@ -10,6 +10,7 @@ import json
 
 from database import *
 import check
+from constants import *
 from typing import *
 
 load_dotenv()
@@ -52,8 +53,8 @@ def callback():
 def reply(intent, text, reply_token, id, disname):
     if intent == 'add_subscribe':
         text1 = text.split("\n")
-        splited_bloodtype, splied_district = text1[2].split(
-            ":"), text1[3].split(":")
+        splited_bloodtype, splied_district = text1[1].split(
+            ":"), text1[2].split(":")
         user_bloodtype, user_district = splited_bloodtype[1].replace(
             " ", ""), splied_district[1].replace(" ", "", 1)
         exist = update_subscriber(id)
@@ -130,10 +131,10 @@ def announcement():
         response_info['bloodtype'], response_info['district'])
     for i in range(len(targets)):
         lst_users_id.append(targets[i-1].user_id)
-    text_message = "ประกาศด่วน ! \nตอนนี้ต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณเขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
-        % (response_info['bloodtype'], response_info['district'], response_info['hospital'], response_info['name'], response_info['surname'])
+    text_message = "ประกาศด่วน ! \nมีความต้องการรับบริจาคเลือดกรุ๊ป %s\nสำหรับผู้ที่อยู่ใกล้เคียงบริเวณ  เขต%s ทาง%sกำลังต้องการเลือดเพิ่มสำหรับผู้ป่วยชื่อ %s นามสกุล %s"\
+        % (response_info['bloodtype'], thai_district[response_info['district']], response_info['hospital'], response_info['name'], response_info['surname'])
     message = TextSendMessage(text=text_message)
-    # line_bot_api.multicast(lst_users_id, message)
+    line_bot_api.multicast(lst_users_id, message)
     print("sending message to : ", lst_users_id, flush=True)
     return 'success'
 
