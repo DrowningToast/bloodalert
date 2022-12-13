@@ -109,7 +109,7 @@ def reply(intent, text, reply_token, id, disname):
         print("sending announcement to user", flush=True)
 
 
-@ app.route('/announcement')
+@ app.route('/announcement', methods=['POST'])
 def announcement():
     # receive json
     response_info = request.get_json(silent=True, force=True)
