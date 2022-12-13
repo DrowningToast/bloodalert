@@ -115,7 +115,15 @@ const Announcement: NextPage = () => {
           </div>
         ) : (
           <form
-            onSubmit={form.onSubmit((data) => mutate(data as IAnnouncement))}
+            onSubmit={form.onSubmit(async (data) => {
+              try {
+                mutate(data as IAnnouncement);
+                alert("ประกาศสำเร็จ สามารถรอการติดต่อได้เลย");
+              } catch (error) {
+                alert("An error has occured");
+                console.log(error);
+              }
+            })}
             className="px-6 py-4 flex flex-col gap-y-2"
           >
             <TextInput
