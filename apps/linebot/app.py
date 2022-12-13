@@ -175,7 +175,7 @@ def post_announcement():
     # Send(data)
 
     # Create a new Announcement record/entity
-    add_announcement(req)
+    add_announcement(**req)
     return 'OK'
 
 
