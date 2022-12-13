@@ -1,9 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".env"
+  ],
+  "globalEnv": [
+    "NEXT_PUBLIC_BACKEND",
+    "NEXT_PUBLIC_apiKey",
+    "NEXT_PUBLIC_authDomain",
+    "NEXT_PUBLIC_projectId",
+    "NEXT_PUBLIC_storageBucket",
+    "NEXT_PUBLIC_messagingSenderId",
+    "NEXT_PUBLIC_appId",
+    "NEXT_PUBLIC_measurementId"
+  ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     },
     "lint": {
       "outputs": []

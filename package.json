@@ -9,8 +9,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:linebot": "turbo run dev --filter=linebot",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "setup:python": "pip3 install -r requirements.txt",
+    "setup": "npm i pnpm && pnpm install && pnpm run setup:python && docker-compose up -d --build"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
@@ -20,6 +24,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
-  "packageManager": "yarn@1.22.19"
+  "dependencies": {
+    "pnpm": "^7.18.2"
+  }
 }
