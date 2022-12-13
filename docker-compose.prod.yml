@@ -43,7 +43,7 @@ services:
       - CHANNEL_SECRET=${CHANNEL_SECRET}
       - DATABASE_URL=postgres
     ports:
-      - 3000:80
+      - 80:5000
     depends_on:
       - postgres
     networks:
