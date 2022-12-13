@@ -72,6 +72,8 @@ def reply(intent: str, text: str, reply_token, id, disname):
             text_message = TextSendMessage(
                 text="ทำการบันทึกข้อมูลของคุณเรียบร้อยแล้ว ขอบคุณที่สมัครรับข่าวสาร")
         else:
+            print(user_bloodtype, flush=True)
+            print(user_district, flush=True)
             text_message = TextSendMessage(
                 text="ข้อมูลของคุณมีข้อผิดพลาด กรุณาใส่รายละเอียดให้ถูกต้องอีกครั้ง")
         line_bot_api.reply_message(reply_token, text_message)
