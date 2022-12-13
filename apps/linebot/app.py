@@ -55,9 +55,10 @@ def reply(intent: str, text: str, reply_token, id, disname):
         # bloodtype index
         text_bloodtype = text.replace(' ', '')
         user_bloodtype = text_bloodtype[text_bloodtype.find(
-            'bloodtype'):].replace('bloodtype:', '')[0]
+            'bloodtype'):].replace('bloodtype', '').replace(':', '').lstrip(' ')[0]
         text_district = text[text.find('District'):].replace('District', "")
-        user_district = text_district[text_district.find(':'):].lstrip(' ')
+        user_district = text_district[text_district.find(
+            ':'):].replace(':', '').lstrip(' ')
 
         # text1 = text.split("\n")
         # splited_bloodtype, splied_district = text1[1].split(
