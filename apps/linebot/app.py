@@ -123,7 +123,7 @@ def announcement():
     time = response_info['date'].split("T")[1].replace('Z', '').split(":")
     if annnouncement_check == True:
         add_announcement(response_info['name'], response_info['surname'], response_info['age'], response_info['phonenumber'], response_info['bloodtype'],
-                         response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2])), response_info['note'])
+                         response_info['hospital'], response_info['district'], datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]), int(time[2].split('.')[0])), response_info['note'])
         print("successfully add announcement info", flush=True)
     else:
         print("failed to add announcement info", flush=True)
