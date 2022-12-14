@@ -4,14 +4,12 @@ This is the repository for Bloodalert project.
 
 ## What's inside?
 
-This project uses [pnpm](https://pnpm.io/) as a package manager. It includes the following packages/apps:
+This project uses [pnpm](https://pnpm.io/) and [pip](https://pypi.org/project/pip/) as a package manager. It includes the following packages/apps:
 
 ### Apps and Packages
 
 - `web`: a [Next.js](https://nextjs.org/) app
 - `linebot`: a Flask http server with PonyORM connected to PostgresDB
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Build
 
